@@ -32,4 +32,20 @@ public class TodoController {
         List<TodoResponse> responses = todoService.findAll();
         return ResponseEntity.ok(responses);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TodoResponse> findById(
+            @PathVariable Long id
+    ){
+        TodoResponse response = todoService.findById(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
+        @PathVariable Long id)
+    {
+        todoService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
