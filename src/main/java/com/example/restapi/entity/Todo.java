@@ -1,5 +1,6 @@
 package com.example.restapi.entity;
 
+import com.example.restapi.dto.request.TodoUpdateRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,5 +33,10 @@ public class Todo {
         this.content = content;
         this.completed = false;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 }
