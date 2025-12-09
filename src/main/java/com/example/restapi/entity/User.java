@@ -1,39 +1,41 @@
 package com.example.restapi.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table
+@Table(name = "users")
 @Getter
 @NoArgsConstructor
-
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(nullable = false, unique = true, length = 30)
     private String username;
+
     @Column(nullable = false)
     private String password;
+
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 20)
     private String name;
 
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
-    public User(String username, String password, String email, String name, String created_at) {
+    @Builder
+    public User(String username, String password, String email, String name) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.name = name;
-        this.created_at = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
 }
