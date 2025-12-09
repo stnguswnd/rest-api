@@ -34,7 +34,11 @@ public class JwtProvider {
         Date expirayDate = new Date(now.getTime() + expiration);
 
 
-        return Jwts.builder().subject(username).issuedAt(now).expiration(expirayDate).signWith(secretKey).compact();
+        return Jwts.builder().
+                subject(username).
+                issuedAt(now).
+                expiration(expirayDate).
+                signWith(secretKey).compact();
     }
 
     // claims 검증, 복호화 하는 과정

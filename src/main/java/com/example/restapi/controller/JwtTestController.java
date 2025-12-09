@@ -26,6 +26,18 @@ public class JwtTestController {
         return ResponseEntity.ok(ApiResponse.success(Map.of("token", token)));
     }
 
-    //@GetMapping("/validate")
+    //유효한지에 대한 정보와 사용자에 대한 정보를 Object 객체로 전달함.
+    @GetMapping("/validate")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> validateToken(@RequestParam String token){
+        boolean valid = jwtProvider.validateToken(token);
+        String username = valid ? jwtProvider.getUsername(token) : null;
+
+        return ResponseEntity.ok(ApiResponse.success(
+                Map.of(
+                        "valid", valid,
+                        "username", username
+                )
+        ));
+    }
 
 }
