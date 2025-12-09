@@ -4,9 +4,11 @@ import com.example.restapi.dto.request.TodoCreateRequest;
 import com.example.restapi.dto.request.TodoUpdateRequest;
 import com.example.restapi.dto.response.TodoResponse;
 import com.example.restapi.entity.Todo;
+import com.example.restapi.entity.User;
 import com.example.restapi.exception.CustomException;
 import com.example.restapi.exception.ErrorCode;
 import com.example.restapi.repository.TodoRepository;
+import com.example.restapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +21,18 @@ import java.util.List;
 public class TodoServiceImpl implements TodoService {
 
     private final TodoRepository todoRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
-    public TodoResponse create(TodoCreateRequest request){
+    public TodoResponse create(TodoCreateRequest request, String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
         Todo todo = Todo.builder()
                 .title(request.getTitle())
                 .content(request.getContent())
+                .user(user)
                 .build();
         Todo saved = todoRepository.save(todo);
         return TodoResponse.from(saved);

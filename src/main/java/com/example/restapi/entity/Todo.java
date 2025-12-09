@@ -1,10 +1,7 @@
 package com.example.restapi.entity;
 
 import com.example.restapi.dto.request.TodoUpdateRequest;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,11 +24,18 @@ public class Todo {
 
     private LocalDateTime createdAt;
 
+
+    //아래 코드는 이전이랑 똑같음
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @Builder
-    public Todo(String title, String content) {
+    public Todo(String title, String content, User user) {
         this.title = title;
         this.content = content;
         this.completed = false;
+        this.user = user;
         this.createdAt = LocalDateTime.now();
     }
 
