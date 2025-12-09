@@ -49,7 +49,7 @@ public class TodoController {
         @PathVariable Long id)
     {
         todoService.delete(id);
-        return ResponseEntity.ok(ApiResponse.success());
+        return ResponseEntity.ok(ApiResponse.success()); //No 컨텐츠를 ok로 바꾸면서 204 -> 200로 바뀜.
     }
 
     @PutMapping("/{id}")
